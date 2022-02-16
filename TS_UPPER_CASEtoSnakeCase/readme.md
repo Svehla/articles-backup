@@ -4,9 +4,9 @@
 Today's challenge is to retype an `UPPER_CASE` static string into `camelCase` and apply this transformation recursively to the object keys.
 
 Preview
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/v6rc84n2qxv90h7ufhvh.png)
+![upperCaseToCamelCase](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/upperCaseToCamelCase.png)
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/51sc4y5l4xupd36vhai1.png)
+![transformKeysToCamelCase](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/transformKeysToCamelCase.png)
 
 
 As you can see, we transformed static type text written in `UPPER_CASE` format into `camelCase`. Then we applied the transformation recursively to all the object keys.
@@ -65,7 +65,7 @@ type HeadLetter<T> = T extends `${infer FirstLetter}${infer _Rest}` ? FirstLette
 
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/5pf9414szesfz7sqg68u.png)
+![headLetter](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/headLetter.png)
 
 #### TailLetters
 
@@ -75,7 +75,7 @@ This generic infers all the letters except the first one and returns them.
 type TailLetters<T> = T extends `${infer _FirstLetter}${infer Rest}` ? Rest : never
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/jb1vd43nx9caism7jb30.png)
+![tailLetters](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/tailLetters.png)
 
 
 #### LetterToUpper
@@ -90,7 +90,7 @@ type LetterToUpper<T> = T extends `${infer FirstLetter}${infer _Rest}`
   : T
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/bm530olmqq8lfk87w6aj.png)
+![letterToUpper](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/letterToUpper.png)
 
 #### LetterToLower
 
@@ -102,7 +102,7 @@ type LetterToLower<T> = T extends `${infer FirstLetter}${infer _Rest}`
   : T
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/1o7098k391hqelrqrq05.png)
+![letterToLower](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/letterToLower.png)
 
 #### ToLowerCase
 
@@ -116,7 +116,7 @@ type ToLowerCase<T> = T extends ''
 
 ``` 
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/xjpf7bmvfdu2xlp20dxi.png)
+![toLowerCase](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/toLowerCase.png)
 
 #### ToSentenceCase
 
@@ -128,7 +128,7 @@ type ToSentenceCase<T> = `${LetterToUpper<HeadLetter<T>>}${ToLowerCase<TailLette
 ```
 
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/1lsm3xwpgwto6ahkpxqo.png)
+![toSentenceCase](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/toSentenceCase.png)
 
 
 We're done with all our utils Generics, so we can jump into the final type implementation.
@@ -147,7 +147,7 @@ type ToPascalCase<T> = T extends ``
 
 As you can see, we recursively split words by `_` delimiter. Each word converts to `Sentencecase` and joins them together.
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/1rj0ypv0h3n6fa4c40aj.png)
+![toPascalCase](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/toPascalCase.png)
 
 ### UpperCaseToCamelCase
 The last step is to use `PascalCase` but to keep the first letter of the first word lowercase.
@@ -158,7 +158,7 @@ We use previously created generics and just combine them together.
 export type UpperCaseToCamelCase<T> = `${ToLowerCase<HeadLetter<T>>}${TailLetters<ToPascalCase<T>>}`
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/z8896snhd26k8vttz4dr.png)
+![upperCaseToCamelCase](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/upperCaseToCamelCase-2.png)
 
 
 Pretty amazing and kinda simple code, right? 
@@ -177,7 +177,7 @@ type GetObjValues<T> = T extends Record<any, infer V> ? V : never
 
 This simple generic helps us to extract data outside of a `Record<any, T>` wrapper.
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/zmtkvxeken62a9fmqwl6.png)
+![getObjValues](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/getObjValues.png)
 
 
 #### Cast
@@ -194,7 +194,7 @@ type T4 = string | number
 type T5 = Cast<T4, string>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/cxe1if6azoxac9xllypt.png)
+![cast](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/cast.png)
 
 #### SwitchKeyValue
 
@@ -206,7 +206,7 @@ The goal of this generic is to transform the string value into the key and vice-
 type Foo = SwitchKeyValue<{ a: 'key-a', b: 'key-b' }>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/jo3p5452hft697turzh1.png)
+![switchKeyValue](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/switchKeyValue.png)
 
 
 ```typescript
@@ -254,7 +254,8 @@ type NestedKeyRevert = TransformKeysToCamelCase<{
 }>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/cw1tvlcelhkxmf765osl.png)
+![transformKeysToCamelCase3](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/transformKeysToCamelCase3.png)
+
 
 
 As you can see, the generic has 3 steps which are saved into `T0`, `T1` and `T2` variables. 
@@ -267,7 +268,7 @@ The first step creates an Object type where keys are UPPER_CASE and values are j
 T0 = { [K in keyof T]: UpperCaseToCamelCase<K> },
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/2k8simblt3582u22moly.png)
+![nestedKeyRevertType](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/nestedKeyRevertType.png)
 
 #### The second step
 The second step just applies the previously created generic and switch keys to values
@@ -276,7 +277,7 @@ The second step just applies the previously created generic and switch keys to v
 T1 = SwitchKeyValue<T0>,
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/rxn79p8b4e0z3lsvvsre.png)
+![nestedKeyRevert](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/nestedKeyRevert.png)
 
 
 #### The third step
@@ -287,7 +288,7 @@ The third step connects `T1` with the data type from `T`.
 T2 = { [K in keyof T1]: T[Cast<T1[K], string>] }
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/cw1tvlcelhkxmf765osl.png)
+![transform Keys to camel Case 2](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/transformKeysTOCamelCase2.png)
 
 ### Add nested deep recursion
 
@@ -328,7 +329,7 @@ type NestedKeyRevert = TransformKeysToCamelCase<{
 }>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/de4h6qg9obi1fzm7zwd1.png)
+![transformKeysToCamelCase](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_UPPER_CASEtoSnakeCase/imgs/transformKeysToCamelCase.png)
 
 
 Everything works well.
