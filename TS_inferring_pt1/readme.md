@@ -88,7 +88,7 @@ const main = (): number => {
 }
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/c0ihatghrzuyi64diqds.gif)
+![main ts 1](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/main-ts-1.gif)
 
 Ugh… awful right?
 Hmm so let’s apply Typescript “*type inference*”.
@@ -102,7 +102,7 @@ const main = () => {
 }
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/eu4fynp2fzbzoeogyymo.gif)
+![main ts 2](imgs/main-ts-2.gif)
 
 This looks way better. Typescript is smart and understands that `3` is a `number` and plus operator returns a `number`.
 
@@ -133,7 +133,7 @@ const main = () => {
 }
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/swcq0qq4tyqf1ivi1ga2.gif)
+![main ts 3](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/main-ts-3.gif)
 
 It’s much clearer in this more “spaghetti-like” implementation. Variables `foo` and `bar` are just `numbers`.
 
@@ -189,7 +189,7 @@ const user = {
 type User = typeof user 
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/rcy4xjz4a3qsys1q4s69.png)
+![typeof-preview](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/typeof-preview.png)
 
 You can see that this new code does not create declaration duplicates and our Javascript object is the source of truth for the type `User`. And at the top of it, we can still use Typescript types to check the correctness of the code implementation.
 
@@ -206,7 +206,7 @@ const changeUserName = (userToEdit: User, age: number) => {
 };
 
 ```
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/zd1ewjmfc0n9h2a4g6xb.png)
+![change-user-name](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/change-user-name.png)
 
 
 If Typescript is not able to 100% correctly infer your static types, you can help the compiler by defining a sub-value of an object with `as` syntax. In this example: `state: 'nil' as 'nil' | 'pending' | 'done'` we set that the state attribute contains only `nil`, `pending` or `done` value.
@@ -225,7 +225,7 @@ const changeUserName = (useToEdit: User, newName: string) => {
 };
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/vvxfzkd4ews22kq5ngdx.png)
+![userToEdit](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/userToEdit.png)
 
 
 as you can see:
@@ -269,7 +269,7 @@ type Animal =
   | Whale
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/86pisckt5au7201smrbl.png)
+![animal](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/animal.png)
 
 Let’s add a `type` attribute for each of our animals to make a unique standardized way of identifying an “instance” of the animal type and check the correctness of objects.
 
@@ -292,14 +292,14 @@ const animalWhaleErr: Animal = {
 }
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/z65c4l5vdqjb49eh6y2g.png)
+![length-error](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/length-error.png)
 
 
 You can see that we use the Typescript `&` operator for merging two Typescript’s data types.
 
 Now we can create a print function that uses a `switch-case` pattern matching over our inferred javascript object.
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/818tiimap9uldseg8xkn.gif)
+![print Animal Attrs](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/printAnimalAttrs.gif)
 
 ```typescript
 const elephantExample = {
@@ -346,20 +346,20 @@ As you see in this example, we just took a simple Javascript code and added a fe
 
 Typescript has an `as const` syntax feature that helps with defining constant values instead of basic data types. If the Typescript compiler found an expression like:
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/rlu2g4pq8xcrzjl1v3a6.png)
+![css-type](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/css-type.png)
 
 it obviously infers `justifyContent` key as a `string`. But we as programmers know that `justifyContent` is an enum with values:
  `'flex-start' | 'flex-end' | 'start' | .. | .. | etc ...`
 
 We have no option of getting this `justifyContent` data-type information from the code snippet because CSS specification is not related to the Typescript specification. So let’s transform this static object into a type with exact compile-time values. To do this, we are going to use an `as const` expression.
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/0itt74muga9nwmr1059r.png)
+![css-as-const](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/css-as-const.png)
 
 Now we can use `justifyContent` as a `readonly` constant value `flex-start`.
 
 In the next example, we combine `as const`, `as`, and `typeof` for a one-line configuration type interface.
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/2i9ublwiy8sepxnwk52w.png)
+![configuration-typeof](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/configuration-typeof.png)
 
 ### Conclusion
 
