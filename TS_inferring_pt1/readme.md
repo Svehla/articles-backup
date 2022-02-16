@@ -102,7 +102,7 @@ const main = () => {
 }
 ```
 
-![main ts 2](imgs/main-ts-2.gif)
+![main ts 2](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt1/imgs/main-ts-2.gif)
 
 This looks way better. Typescript is smart and understands that `3` is a `number` and plus operator returns a `number`.
 
