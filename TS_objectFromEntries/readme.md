@@ -22,7 +22,7 @@ const result = Object.fromEntries(data)
 ```
 
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/434sbq3rq8t9hq33gn0e.png)
+![object-from-entries](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/object-from-entries.png)
 
 ## Motivation
 The default typescript type for `Object.fromEntries` definition looks like this
@@ -72,7 +72,7 @@ type T4 = string | number
 type T5 = Cast<T4, string>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/9kna6qn3ouxt9wdt5m25.png)
+![cast](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/cast.png)
 
 Okay... it should be enough for this moment. We can start with the `FromEntries<T>` generic.
 
@@ -94,7 +94,7 @@ type ResFromEV1 = FromEntriesV1<[
 ]>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/8r1k2ir4zpzmtpcp9zpu.png)
+![fromEntriesV1](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/fromEntriesV1.png)
 
 
 <sub>*It works the same even without `Cast<Key, string>` generic but Typescript compiler still warning you that there is a potential error so we have to bypass it with the `Cast<X, Y>`*</sub>
@@ -128,7 +128,7 @@ type Data = typeof data
 type T2 = ArrayElement<Data>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/cf8ngi1a1vcb83qgmd2u.png)
+![ArrayElement](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/ArrayElement.png)
 
 
 Okey we can continue with adding proper `value` into the new object. We just simply set that value is second item of nested tuple `ArrayElement<T>[1]`.
@@ -139,7 +139,7 @@ type FromEntriesV2<T> = T extends [infer Key, any][]
   : { [key in string]: any }
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/0jais3wttdvg0jfhsve3.png)
+![fromEntriesV2](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/fromEntriesV2.png)
 
 we successfully extracted all possible values but as we can see, there is a missing connection between `key` and `value` in our new type.
 
@@ -170,7 +170,7 @@ type Result = FromEntries<[
 ]>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/gxdy5w6ud2wwg2ca3c4i.png)
+![fromEntries](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/fromEntries.png)
 
 And... that's all!!! Good job! we did it 🎉 now the generics can transfer an Array of tuples into object type.
 
@@ -186,9 +186,9 @@ type Data = typeof data
 type Res = FromEntries<Data>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/9y8ybguqoqn0bs7tdsya.png)
+![typeof](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/typeof.png)
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/ul6786dg5dnyuut7od2p.png)
+![as-const-typeof](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/as-const-typeof.png)
 
 To resolve this issue let's introduce another generic `DeepWriteable`
 
@@ -210,7 +210,7 @@ type Data = typeof data
 type T3 = DeepWriteable<Data>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/xwmuko5wmxg63nwhcv9p.png)
+![deepWriteable](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/deepWriteable.png)
 
 
 With this new knowledge, we can fix unexpected behavior and make it all works again.
@@ -222,7 +222,7 @@ type Data = typeof data
 type T6 = FromEntries<DeepWriteable<Data>>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/83f4as0aq9xmajvh4i40.png)
+![fromEntriesDeepWriteable](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_objectFromEntries/imgs/fromEntriesDeepWriteable.png)
 
 
 
