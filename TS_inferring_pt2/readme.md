@@ -80,7 +80,7 @@ const value2 = unwrapKey({ key: true });
 const value3 = unwrapKey({ key: true } as const);
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/fdp7x893en9mhr477m0x.gif)
+![unwrapKey](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/unwrapKey.gif)
 
 Typescript dynamically infers arguments and returns the value of the function by extracting the data type of `<T>` which is passed as a `generic` value. The function is 100% type-safe even if the property `key` is type-agnostic.
 
@@ -100,7 +100,7 @@ const willNotWork = unwrapKey({
 
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/29ed0oi7kgyb7b3qfczs.png)
+![willNotWork](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/willNotWork.png)
 
 
 Documentation:
@@ -119,7 +119,7 @@ const a: Foo<number> = [2, '3']
 const b: Foo<boolean> = true
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/n3v4bar3cj4huap97k1f.png)
+![foo](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/foo.png)
 
 
 If the type of `T` is a `number`, the resulting type is a tuple if not, it‘s just boolean.
@@ -145,7 +145,7 @@ type GetUserFn = typeof getUser
 
 type User = ReturnType<GetUserFn>
 ```
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/dtzrf3utoxxnq8uu73dx.png)
+![returnFnType](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/returnFnType.png)
 
 You will read more about ReturnType generic later in this chapter.
 
@@ -171,7 +171,7 @@ const main = async () => {
   const result = await getData()
 }
 ```
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/wu7i8htcmdkqesmzqrmn.png)
+![getAwaitData](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/getAwaitData.png)
 
 ### 6. Utility types
 
@@ -204,7 +204,7 @@ const getUser = (name: string) => ({
 })
 type User = ReturnType<typeof getUser>
 ```
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/w65ovnk998dcz689klrr.png)
+![returnTypeTypeof](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/returnTypeTypeof.png)
 
 This is a great feature for our new Typescript inferring programming mental model which we presented in the [previous chapter](https://dev.to/svehla/typescript-inferring-stop-writing-tests-avoid-runtime-errors-pt1-33h7).
 
@@ -216,7 +216,7 @@ type FooReturnValue= ReturnType<typeof foo>
 type bar = FooReturnValue['foo']
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/ukan92urpv4ey1twr1d2.png)
+![fooReturnValue](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/fooReturnValue.png)
 
 ### 6.2 Partial<…>
 
@@ -245,7 +245,7 @@ const user = {
 type PartialUser = Partial<typeof user>
 
 ```
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/dsbxjcb2qbp6k1yhs36a.png)
+![Partial](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/Partial.png)
 
 
 ### 7. Custom generics utils
@@ -290,7 +290,7 @@ type Response = Await<ReturnType<typeof getMockUserFromServer>>
 ```
 
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/dfqb0u2lusa0szrr56j6.png)
+![Await](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/Await.png)
 
 It adds another possibility of inferring more advanced hidden data types in Javascript code.
 
@@ -376,13 +376,13 @@ type GetMeResponse = Await<ReturnType<typeof getMeMock>>
 type User = RecursivePartial<GetMeResponse['data']['user']>
 ```
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/1qamibahql14ok5mbap9.png)
+![AwaitReturnType](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/AwaitReturnType.png)
 
 Do you see it too? We took almost pure javascript code and using our Typescript utils, **we added only 2 lines of Typescript code and inferred all static data types from this Javascript implementation!** We can still write Javascript code and enhance it with Typescript micro annotations. All of that with a minimal amount of effort without boring interface typing.
 
 And at top of it, every time you want to access some sub-property of User type, your IDE will automatically add an [optional chaining operator](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining) (name**?** ). Because we made all fields optional, accessing nested values can’t throw a new error.
 
-![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/cgbbbkirrvxv9gzuihp8.png)
+![Alt Text](https://raw.githubusercontent.com/Svehla/articles-backup/main/TS_inferring_pt2/imgs/readUser.png)
 
 
 If optional chaining does not work, you have to set up `“strictNullChecks”: true`, in your `tsconfig.json`
@@ -395,7 +395,7 @@ And that’s it! At this moment you’re able to infer whatever you want from yo
 
 I believe that in your average code there are not big tricky functions with hard to understand data models. So please, don’t overthink your `generics`. Every time you create new `generic` think about if it’s necessary to create that kind of redundant abstraction which decreases code/type readability. So if you write a type by hand, be **strict** and **clear**. Generics are awesome especially for some **general-purpose** utility types (`ReturnType`, `Await`, Etc.). But be aware, generics in your custom data model could add extra unwanted complexity. So pay attention and use your brain and heart to do it well ❤️.
 
-**Bad practice **😒
+**Bad practice 😒**
 
 ```typescript
 type UserTemplate<T> = { id: string, name: string } & T
@@ -404,7 +404,7 @@ type User2 = UserTemplate<{ motherName: string }>
 type User = User1 | User2
 ```
 
-**Good practice **🎉
+**Good practice 🎉**
 
 ```typescript
 type UserTemplate = { id: string, name: string }
