@@ -304,15 +304,9 @@ export const genericAsyncLocalStorageContextBuilder = <InitState, T>(
 
 ### ✅ How to use it
 
-Let’s define a scoped logger that tracks `requestId`:
-
 ```ts
-type LoggerState = {
-	requestId: string
-	log: (msg: string) => void
-}
 
-const loggerContext = genericAsyncLocalStorageContextBuilder<string, LoggerState>((requestId) => {
+const loggerContext = genericAsyncLocalStorageContextBuilder(() => {
 	const state = { 
 		counter: 0
 	}
@@ -323,3 +317,50 @@ const loggerContext = genericAsyncLocalStorageContextBuilder<string, LoggerState
 	}
 })
 ```
+
+---
+
+## 🧲 Bonus #2: Reference Serializer with Internal WeakMap
+
+Need to track object references and assign them unique serializable IDs?  
+Here's a clean, testable, and zero-boilerplate way to do it — again, **no class needed**.
+
+```ts
+const serializeRef = (() => {
+	const referenceMap = new WeakMap<object | ((...args: unknown[]) => unknown), number>()
+	let counter = 0
+
+	const get = (obj: object | ((...args: unknown[]) => unknown)) => {
+		// You can add type guards here if needed
+		if (!referenceMap.has(obj)) {
+			referenceMap.set(obj, counter++)
+		}
+		return referenceMap.get(obj)!
+	}
+
+	return {
+		get,
+	}
+})()
+```
+
+### ✅ How to use it
+
+```ts
+const refSerializer = buildSerializeRef()
+
+const objA = {}
+const objB = {}
+
+console.log(refSerializer.get(objA)) // 0
+console.log(refSerializer.get(objB)) // 1
+console.log(refSerializer.get(objA)) // 0 (same as before)
+```
+
+This utility:
+- Uses a **closure** for state (`referenceMap`, `counter`)
+- Exposes a simple, focused API (`get`)
+- Avoids global side effects
+- Is easily mockable & testable
+- Is perfect for serialization, diffing, or memoization
+
