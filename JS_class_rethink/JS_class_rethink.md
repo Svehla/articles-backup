@@ -82,6 +82,8 @@ console.log(instance.state)
 // auto-completion works perfectly!
 ```
 
+![TypeScript intellisense showing automatic type inference](./ts-intelistence.png)
+
 - No need to define types or interfaces — unless you want to.
 - Full **autocomplete** and **type safety** in IDEs.
 - Cleaner code, no boilerplate classes, constructors, or properties.
