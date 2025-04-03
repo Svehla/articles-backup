@@ -110,9 +110,9 @@ No class, no new, no prototype, no `__proto__` just pure JS — scoped and state
 
 ---
 
-## 🧬 Inheritance via Spread Operator
+## 🧬 Inheritance via Spread Operator or just a object pointer
 
-Want inheritance? Easy. Use just an function call and get a instance poitner
+Want inheritance? Easy. Use just an function call and get a instance pointer
 
 ```ts
 const ParentClass = (constructorArgInitCounter) => {
