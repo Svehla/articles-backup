@@ -16,17 +16,17 @@ It's something between prototype-based JS functions and JS classes, with benefit
 
 ```ts
 const RethinkedClass = (constructorArgInitCounter?: number) => {
-	// mutable variable
-	let state = { counter: constructorArgInitCounter ?? 0 }
+  // mutable variable
+  let state = { counter: constructorArgInitCounter ?? 0 }
         
         // private state (pointer to privateState is not returned in the function
         let privateState = { private: 'state' }
 
-	// methods
-	const increase = () => state.counter++
+  // methods
+  const increase = () => state.counter++
 
-	// public facing API
-	return { state, increase }
+  // public facing API
+  return { state, increase }
 }
 
 const instance1 = RethinkedClass(10)
@@ -50,27 +50,27 @@ Let TypeScript infer everything for you — even for deeply nested structures.
 
 ```ts
 const ComplexClass = (name: string) => {
-	let state = {
-		counter: 0,
-		meta: {
-			createdAt: new Date(),
-			createdBy: name,
-		},
-		tags: ['tag1']
-	}
+  let state = {
+    counter: 0,
+    meta: {
+      createdAt: new Date(),
+      createdBy: name,
+    },
+    tags: ['tag1']
+  }
 
-	const increase = () => state.counter++
-	const addTag = (tag: string) => state.tags.push(tag)
+  const increase = () => state.counter++
+  const addTag = (tag: string) => state.tags.push(tag)
 
-	return {
-		state,
-		increase,
-		addTag,
-		reset: () => {
-			state.counter = 0
-			state.tags = []
-		}
-	}
+  return {
+    state,
+    increase,
+    addTag,
+    reset: () => {
+      state.counter = 0
+      state.tags = []
+    }
+  }
 }
 
 const instance = ComplexClass('devto_user')
@@ -94,9 +94,9 @@ console.log(instance.state)
 
 ```ts
 const singletonRethinkedClass = (() => {
-	let state = { counter: 0 }
-	const increase = () => state.counter++
-	return { state, increase }
+  let state = { counter: 0 }
+  const increase = () => state.counter++
+  return { state, increase }
 })()
 
 singletonRethinkedClass.increase()
@@ -116,28 +116,28 @@ Want inheritance? Easy. Use just an function call and get a instance pointer
 
 ```ts
 const ParentClass = (constructorArgInitCounter) => {
-	const state = { counter: constructorArgInitCounter ?? 0 }
-	const increase = () => state.counter++
-	return { state, increase }
+  const state = { counter: constructorArgInitCounter ?? 0 }
+  const increase = () => state.counter++
+  return { state, increase }
 }
 
 const ChildClass = () => {
-	const parentClassInstance = ParentClass()
+  const parentClassInstance = ParentClass()
 
-	const state = {
-		parentState: parentClassInstance.state,
-		childClassState: 0
-	}
+  const state = {
+    parentState: parentClassInstance.state,
+    childClassState: 0
+  }
 
-	const increase = () => {
-		state.childClassState++
-		parentClassInstance.increase()
-	}
+  const increase = () => {
+    state.childClassState++
+    parentClassInstance.increase()
+  }
 
-	return {
-		state,
-		increase,
-	}
+  return {
+    state,
+    increase,
+  }
 }
 
 const childClass = ChildClass()
@@ -157,14 +157,14 @@ Interfaces? just use satisfies instead
 
 ```ts
 type SomeRandomClassInterface = {
-	counter: number,
-	increase: () => number
+  counter: number,
+  increase: () => number
 }
 
 const MyClass = (constructorArgInitCounter?: number) => {
-	const counter = constructorArgInitCounter ?? 1
-	const increase = () => counter++
-	return { counter, increase } satisfies SomeRandomClassInterface
+  const counter = constructorArgInitCounter ?? 1
+  const increase = () => counter++
+  return { counter, increase } satisfies SomeRandomClassInterface
 }
 ```
 
@@ -184,10 +184,10 @@ Ever had to `bind(this)` because `this` got lost in the callback wilderness?
 
 ```ts
 class A {
-	state = 0
-	hello() {
-		console.log(this.state)
-	}
+  state = 0
+  hello() {
+    console.log(this.state)
+  }
 }
 const aInstance = new A()
 aInstance.state = 10
@@ -199,13 +199,13 @@ Now compare with this scoped alternative:
 
 ```ts
 const A = () => {
-	const state = { counter: 0 }
-	return {
-		state,
-		hello: () => {
-			console.log(state.counter )
-		}
-	}
+  const state = { counter: 0 }
+  return {
+    state,
+    hello: () => {
+      console.log(state.counter )
+    }
+  }
 }
 const aInstance = A()
 aInstance.state.counter = 10
@@ -221,15 +221,15 @@ Scoped closures never lose their context. That's the real magic.
 
 ```ts
 const classGenerator = (name: string) => {
-	return (constructorArg) => {
-		const state = { counter: 0, name }
+  return (constructorArg) => {
+    const state = { counter: 0, name }
 
-		const increase = () => state.counter++
+    const increase = () => state.counter++
 
-		return {
-			state,
-		}
-	}
+    return {
+      state,
+    }
+  }
 }
 const MyClassA = classGenerator('a')
 const MyClassB = classGenerator('b')
@@ -282,23 +282,23 @@ Instead of OOP-style context managers, we use a simple **higher-order function**
 import { AsyncLocalStorage } from 'node:async_hooks'
 
 export const genericAsyncLocalStorageContextBuilder = <InitState, T>(
-	stateFn: (initState: InitState) => T
+  stateFn: (initState: InitState) => T
 ) => {
-	const storage = new AsyncLocalStorage<T>()
+  const storage = new AsyncLocalStorage<T>()
 
-	return {
-		provideContext: (initState: InitState, callback: () => Promise<void> | void) => {
-			const contextValue = stateFn(initState)
-			return storage.run(contextValue, callback)
-		},
-		useContext: () => {
-			const store = storage.getStore()
-			if (!store) {
-				throw new Error('❌ No context available. Make sure to use .run() before accessing the context.')
-			}
-			return store
-		},
-	}
+  return {
+    provideContext: (initState: InitState, callback: () => Promise<void> | void) => {
+      const contextValue = stateFn(initState)
+      return storage.run(contextValue, callback)
+    },
+    useContext: () => {
+      const store = storage.getStore()
+      if (!store) {
+        throw new Error('❌ No context available. Make sure to use .run() before accessing the context.')
+      }
+      return store
+    },
+  }
 }
 ```
 
@@ -307,14 +307,14 @@ export const genericAsyncLocalStorageContextBuilder = <InitState, T>(
 ```ts
 
 const loggerContext = genericAsyncLocalStorageContextBuilder(() => {
-	const state = { 
-		counter: 0
-	}
+  const state = { 
+    counter: 0
+  }
 
-	return {
-		state,
-		increase: () => state.counter++
-	}
+  return {
+    state,
+    increase: () => state.counter++
+  }
 })
 ```
 
@@ -327,20 +327,20 @@ Here's a clean, testable, and zero-boilerplate way to do it — again, **no clas
 
 ```ts
 const serializeRef = (() => {
-	const referenceMap = new WeakMap<object | ((...args: unknown[]) => unknown), number>()
-	let counter = 0
+  const referenceMap = new WeakMap<object | ((...args: unknown[]) => unknown), number>()
+  let counter = 0
 
-	const get = (obj: object | ((...args: unknown[]) => unknown)) => {
-		// You can add type guards here if needed
-		if (!referenceMap.has(obj)) {
-			referenceMap.set(obj, counter++)
-		}
-		return referenceMap.get(obj)!
-	}
+  const get = (obj: object | ((...args: unknown[]) => unknown)) => {
+    // You can add type guards here if needed
+    if (!referenceMap.has(obj)) {
+      referenceMap.set(obj, counter++)
+    }
+    return referenceMap.get(obj)!
+  }
 
-	return {
-		get,
-	}
+  return {
+    get,
+  }
 })()
 ```
 
