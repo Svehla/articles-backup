@@ -1,18 +1,30 @@
-Title1:
-# 🚫 JS class rethink: Stop using Java/C#-like classes, use JS scope instead
-
-Title2:
-# I do not like classes, so there i propose an alternative
-
+# 🚫 Rethink JS Classes: Embrace Closures for Lightweight State & Typing
 
 Hey devs,
 
-I want to introduce a new (but very old-school) way of defining "classes" in JavaScript/TypeScript.
+Let’s talk about classes. Or rather — let’s talk about not using them.
 
-It's called... wait for it... arrow functions with a mutable scope.
-Say goodbye to class Foo and hello to just variables.
+JavaScript gives us powerful tools like closures and lexical scope, yet we often fall back on class-based patterns borrowed from Java or C#. While classes have their place — especially when true inheritance or complex hierarchies are needed — they come with baggage: extra syntax, confusing `this`, and often heavier abstractions than necessary.
 
-It's something between prototype-based JS functions and JS classes, with benefits from both worlds.
+Instead, I want to show you a more lightweight, idiomatic JS/TS approach: builder functions powered by closures.
+
+## 🎯 Why Closures over Classes?
+
+Closures give you all the essentials — without the class boilerplate:
+
+- ✅ **Perfect type inference** — TypeScript just *gets it*  
+- ✅ **Encapsulation** without needing `private` or `#` fields  
+- ✅ **Lightweight state management** — scoped variables instead of `this.state`  
+- ✅ **No `this`, no `.bind()` — just function context**
+
+You don’t always need a class. 
+Unless you *really* need inheritance or `instanceof` behavior, closures + builder functions are often:
+
+- **simpler**  
+- **lighter**  
+- **more idiomatic in JS/TS**
+
+> Think of it as “just enough OOP” without all the baggage.
 
 ---
 
@@ -113,48 +125,6 @@ console.log(singletonRethinkedClass.state.counter) // prints 2
 This pattern is also known as an IIFE – Immediately Invoked Function Expression.
 
 No class, no new, no prototype, no `__proto__` just pure JS — scoped and stateful.
-
-<!-- 
----
-
-## 🧬 Inheritance via Spread Operator or just a object pointer
-
-Want inheritance? Easy. Use just an function call and get a instance pointer
-
-```ts
-const ParentClass = (constructorArgInitCounter) => {
-  const state = { counter: constructorArgInitCounter ?? 0 }
-  const increase = () => state.counter++
-  return { state, increase }
-}
-
-const ChildClass = () => {
-  const parentClassInstance = ParentClass()
-
-  const state = {
-    parentState: parentClassInstance.state,
-    childClassState: 0
-  }
-
-  const increase = () => {
-    state.childClassState++
-    parentClassInstance.increase()
-  }
-
-  return {
-    state,
-    increase,
-  }
-}
-
-const childClass = ChildClass()
-childClass.increase()
-childClass.increase()
-console.log(childClass.state.parentState.counter, childClass.state.childClassState) // prints 2, 2
-
-```
-
-No `super()`, no `extends`, just combine stuff like a LEGO set. -->
 
 ---
 
