@@ -17,13 +17,6 @@ Closures give you all the essentials — without the class boilerplate:
 - ✅ **Lightweight state management** — scoped variables instead of `this.state`  
 - ✅ **No `this`, no `.bind()` — just function context**
 
-You don’t always need a class. 
-Unless you *really* need inheritance or `instanceof` behavior, closures + builder functions are often:
-
-- **simpler**  
-- **lighter**  
-- **more idiomatic in JS/TS**
-
 > Think of it as “just enough OOP” without all the baggage.
 
 ---
