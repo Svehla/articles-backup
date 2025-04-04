@@ -16,6 +16,8 @@ Closures give you all the essentials — without the class boilerplate:
 - ✅ **Encapsulation** without needing `private` or `#` fields  
 - ✅ **Lightweight state management** — scoped variables instead of `this.state`  
 - ✅ **No `this`, no `.bind()` — just function context**
+- ✅ Feels natural for React devs — if you're used to thinking in hooks and closures, this pattern feels like home even outside React (Node.js, libraries, CLI tools...)
+
 
 > Think of it as “just enough OOP” without all the baggage.
 
