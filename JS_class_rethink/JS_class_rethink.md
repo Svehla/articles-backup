@@ -19,8 +19,8 @@ const RethinkedClass = (constructorArgInitCounter?: number) => {
   // mutable variable
   let state = { counter: constructorArgInitCounter ?? 0 }
         
-        // private state (pointer to privateState is not returned in the function
-        let privateState = { private: 'state' }
+  // private state (pointer to privateState is not returned
+  let privateState = { private: 'state' }
 
   // methods
   const increase = () => state.counter++
@@ -110,6 +110,7 @@ This pattern is also known as an IIFE – Immediately Invoked Function Expressio
 
 No class, no new, no prototype, no `__proto__` just pure JS — scoped and stateful.
 
+<!-- 
 ---
 
 ## 🧬 Inheritance via Spread Operator or just a object pointer
@@ -149,7 +150,7 @@ console.log(childClass.state.parentState.counter, childClass.state.childClassSta
 
 ```
 
-No `super()`, no `extends`, just combine stuff like a LEGO set.
+No `super()`, no `extends`, just combine stuff like a LEGO set. -->
 
 ---
 
@@ -251,7 +252,6 @@ Currying, composition, and encapsulation with just functions. No decorators. No 
 
 1. **Type inference** works perfectly – it's just a function.
 2. No `this` pain or need for `.bind()`/`.call()`.
-3. Easier to **read**, **test**, and **refactor**.
 4. **Inheritance** is literal – just spread or compose.
 
 ---
@@ -260,7 +260,6 @@ Currying, composition, and encapsulation with just functions. No decorators. No 
 
 - you need to wrap basic values like boolean/number/string to an object to get an pointer instead of copying values
 - You're creating a lot of instances of functions (methods) in a memory, but no one care in the classical app development
-- your state needs to be wrapped in the object to share a pointer and dot to copy a value instaed
 - You can't use `instanceof` easily – but that's OK if you're doing type-driven development.
 
 ---
