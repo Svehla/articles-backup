@@ -103,6 +103,7 @@ console.log(instance.state)
 
 ---
 
+
 ## 🧍‍♂️ Singleton Instance
 
 ```ts
@@ -147,6 +148,42 @@ Boom, typed with satisfaction 😎.
 ## problems with understanding  `.prototype.` or `__proto__`?
 
 Nope. Nothing like that here. Just Function scopes and a few stable pointers on top of it.
+
+---
+
+## 🔗 Namespaced Static Methods with Cross-References
+
+Another great benefit of this pattern is how naturally it supports **functions that depend on each other** — all scoped in the same closure.
+
+```ts
+export const myModule = (() => {
+  const fn1 = () => {
+    console.log('Hello from fn1')
+    return 42
+  }
+
+  const fn2 = () => {
+    const result = fn1()
+    console.log('fn2 called fn1 and got:', result)
+  }
+
+  return { fn1, fn2 }
+})()
+
+myModule.fn2()
+// Output:
+// Hello from fn1
+// fn2 called fn1 and got: 42
+```
+
+This is a clean, composable pattern that:
+
+- Keeps related logic together
+- Prevents leaking internal helpers outside
+- Avoids circular imports
+- Keeps everything **testable**, **typed**, and **encapsulated**
+
+You can think of it as a "scoped mini-module" — great for feature modules, utils, services, or domain logic.
 
 ---
 
