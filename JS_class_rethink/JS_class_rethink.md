@@ -1,4 +1,8 @@
+Title1:
 # 🚫 JS class rethink: Stop using Java/C#-like classes, use JS scope instead
+
+Title2:
+# I do not like classes, so there i propose an alternative
 
 
 Hey devs,
