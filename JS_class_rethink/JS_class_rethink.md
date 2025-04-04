@@ -225,6 +225,7 @@ Scoped closures never lose their context. That's the real magic.
 ---
 
 ## 🏗️ Class Builder
+- this is an alternative way how to solved some problems, which are normally solved by inheritance
 
 ```ts
 const classGenerator = (name: string) => {
@@ -248,7 +249,7 @@ console.log(b.state.name) // prints b
 
 ```
 
-Currying, composition, and encapsulation with just functions. No decorators. No private fields. Just JS.
+Currying, composition, and encapsulation with just functions.
 
 ---
 
