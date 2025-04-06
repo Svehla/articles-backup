@@ -1,8 +1,8 @@
-# 🚫 Rethink JS Classes: Embrace Closures for Lightweight State & Typing
+# Rethink JS Classes: Embrace Closures for Lightweight State & Typing
 
 Hey devs,
 
-Let’s talk about classes. Or rather — let’s talk about not using them.
+Let’s talk about classes. Or rather — let’s talk about not using them probably?
 
 JavaScript gives us powerful tools like closures and lexical scope, yet we often fall back on class-based patterns borrowed from Java or C#. While classes have their place — especially when true inheritance or complex hierarchies are needed — they come with baggage: extra syntax, confusing `this`, and often heavier abstractions than necessary.
 
@@ -95,7 +95,7 @@ console.log(instance.state)
 // auto-completion works perfectly!
 ```
 
-![TypeScript intellisense showing automatic type inference](./ts-intelistence.png)
+![TypeScript intellisense showing automatic type inference](https://raw.githubusercontent.com/Svehla/articles-backup/refs/heads/main/JS_class_rethink/ts-intelistence.png)
 
 - No need to define types or interfaces — unless you want to.
 - Full **autocomplete** and **type safety** in IDEs.
@@ -268,7 +268,7 @@ Currying, composition, and encapsulation with just functions.
 ## 🧨 Possible downsides?
 
 - you need to wrap basic values like boolean/number/string to an object to get an pointer instead of copying values
-- You're creating a lot of instances of functions (methods) in a memory, but no one care in the classical app development
+- You're creating a lot of instances of functions (methods) in a memory.
 - You can't use `instanceof` easily – but that's OK if you're doing type-driven development.
 
 ---
@@ -373,4 +373,3 @@ This utility:
 - Avoids global side effects
 - Is easily mockable & testable
 - Is perfect for serialization, diffing, or memoization
-
